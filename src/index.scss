@@ -23,6 +23,10 @@ body {
   max-width: $container-size;
 }
 
+main {
+  padding-block: 80px;
+}
+
 ul {
   list-style: none;
 }
@@ -34,5 +38,9 @@ a {
 @media (max-width: 1024px) {
   .container {
     margin-inline: 20px;
+  }
+
+  main {
+    padding-block: 200px;
   }
 }
