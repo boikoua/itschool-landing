@@ -1,0 +1,65 @@
+@import './../../styles/variables.scss';
+
+.nav {
+  padding-block: 20px;
+}
+
+.mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger {
+  width: 20px;
+  height: 14px;
+}
+
+.desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .burger {
+    width: 28px;
+    height: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: flex;
+    justify-content: center;
+  }
+
+  .items {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .link {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 120%;
+    border-radius: 40px;
+  }
+
+  .btn {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 10px 32px;
+    color: $btn-normal-color;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 120%;
+    border-radius: 40px;
+    background-color: $btn-bg-normal-color;
+  }
+}

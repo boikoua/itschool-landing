@@ -1,0 +1,151 @@
+@import './../../styles/variables.scss';
+
+.header {
+  background-image: url('/img/header-bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 72px 72px;
+}
+
+.content {
+  padding-block: 45px 50px;
+}
+
+.top {
+  margin-bottom: 40px;
+  text-align: center;
+
+  & > img {
+    width: 192px;
+    height: 203px;
+  }
+}
+
+.wrapper {
+  & > h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 120%;
+  }
+
+  & > p {
+    color: $text-second-color;
+    font-size: 14px;
+    line-height: 120%;
+  }
+}
+
+.bottom {
+  text-align: center;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 38px;
+
+  & > img {
+    width: 88px;
+  }
+
+  & > p {
+    max-width: 205px;
+    color: $text-second-color;
+    line-height: 120%;
+  }
+}
+
+.btn {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+  padding: 10px 32px;
+  color: $btn-normal-color;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 120%;
+  border-radius: 40px;
+  background-color: $btn-bg-normal-color;
+}
+
+@media (min-width: 768px) {
+  .top {
+    & > img {
+      width: 360px;
+      height: 373px;
+    }
+  }
+
+  .wrapper {
+    & > h1 {
+      font-size: 48px;
+    }
+
+    & > p {
+      font-size: 18px;
+    }
+  }
+
+  .users {
+    & > img {
+      width: 188px;
+    }
+
+    & > p {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .content {
+    padding-block: 142px 136px;
+  }
+
+  .top {
+    position: relative;
+    margin-bottom: 80px;
+    text-align: left;
+
+    & > img {
+      position: absolute;
+      top: -90px;
+      right: 0;
+      height: 480px;
+      width: 587px;
+    }
+  }
+
+  .wrapper {
+    max-width: 475px;
+  }
+
+  .bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .users {
+    flex-direction: row;
+
+    & > img {
+      width: 168px;
+    }
+
+    & > p {
+      font-size: 16px;
+    }
+  }
+
+  .btn {
+    height: fit-content;
+    margin-inline: 0 auto;
+    padding: 16px 32px;
+  }
+}

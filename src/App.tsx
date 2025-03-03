@@ -1,7 +1,12 @@
 import './App.scss';
+import Header from './assets/components/Header';
 
 const App = () => {
-  return <h1>project start</h1>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default App;

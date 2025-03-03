@@ -1,0 +1,62 @@
+@import './../../styles/variables.scss';
+
+.logo {
+  display: flex;
+  gap: 16px;
+}
+
+.figures {
+  position: relative;
+}
+
+.square,
+.circle {
+  width: 12px;
+  height: 12px;
+}
+
+.square {
+  background-color: $square-bg-color;
+  border-radius: 4px;
+}
+
+.circle {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+  background-color: $circle-bg-color;
+  border-radius: 50%;
+}
+
+.text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+@media (min-width: 768px) {
+  .logo {
+    gap: 26px;
+  }
+
+  .square,
+  .circle {
+    width: 24px;
+    height: 24px;
+  }
+
+  .square {
+    border-radius: 8px;
+  }
+
+  .circle {
+    position: absolute;
+    left: 12px;
+    bottom: -10px;
+  }
+
+  .text {
+    padding-top: 6px;
+    font-size: 24px;
+  }
+}
