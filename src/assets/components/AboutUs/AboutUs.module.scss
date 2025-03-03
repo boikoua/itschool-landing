@@ -1,5 +1,9 @@
 @import './../../styles/variables.scss';
 
+.about {
+  margin-bottom: 80px;
+}
+
 .title {
   margin-bottom: 40px;
   color: $text-dark-color;
@@ -50,6 +54,10 @@
 }
 
 @media (min-width: 1280px) {
+  .about {
+    margin-bottom: 200px;
+  }
+
   .title {
     margin-bottom: 88px;
     font-size: 40px;

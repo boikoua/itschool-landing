@@ -35,12 +35,14 @@ a {
   text-decoration: none;
 }
 
+@media (min-width: 1024) {
+  main {
+    padding-block: 200px;
+  }
+}
+
 @media (max-width: 1024px) {
   .container {
     margin-inline: 20px;
-  }
-
-  main {
-    padding-block: 200px;
   }
 }
