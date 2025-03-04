@@ -1,6 +1,7 @@
 import './App.scss';
 import AboutUs from './assets/components/AboutUs';
 import Career from './assets/components/Career';
+import Community from './assets/components/Community';
 import Course from './assets/components/Course';
 import Education from './assets/components/Education';
 import Header from './assets/components/Header';
@@ -18,6 +19,7 @@ const App = () => {
         <Students />
         <Career />
         <Course />
+        <Community />
       </main>
     </>
   );

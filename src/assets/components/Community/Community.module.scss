@@ -28,14 +28,12 @@
 }
 
 .text {
-  margin-bottom: 30px;
   text-align: left;
   color: $career-card-text-color;
 }
 
 .img {
-  margin-bottom: 36px;
-  height: 185px;
+  height: 241px;
 }
 
 .bottom {
@@ -85,7 +83,7 @@
   .img {
     position: absolute;
     top: 0;
-    right: -20px;
+    // right: -20px;
     margin-bottom: 0;
     height: 100%;
     width: 550px;
