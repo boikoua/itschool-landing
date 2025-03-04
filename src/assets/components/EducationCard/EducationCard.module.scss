@@ -1,0 +1,129 @@
+@import './../../styles/variables.scss';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px 23px;
+  background-color: $card-bg-dark;
+  border-radius: 40px;
+}
+
+.image {
+  margin-bottom: 16px;
+  padding: 16px 12px;
+  background-color: $card-bg-gray;
+  border-radius: 20px;
+
+  & > img {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-block: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 120%;
+  border-radius: 40px;
+  background-color: $card-bg-gray;
+}
+
+.bottom {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: $card-bg-content;
+}
+
+.title {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 120%;
+  color: $text-dark-color;
+}
+
+.text {
+  margin-bottom: 26px;
+  font-size: 12px;
+  line-height: 120%;
+  color: $card-text-color;
+}
+
+.pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  & > span {
+    font-size: 12px;
+    color: $text-dark-color;
+  }
+}
+
+@media (min-width: 670px) {
+  .pages {
+    & > span {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    flex-direction: row;
+    gap: 64px;
+    padding: 40px 32px;
+  }
+
+  .top {
+    padding: 22px 25px;
+    border-radius: 40px;
+    background-color: $card-bg-gray;
+  }
+
+  .image {
+    padding: 0;
+  }
+
+  .btn {
+    gap: 20px;
+    padding-block: 10px;
+    font-size: 20px;
+    background-color: $card-btn-desktop-bg;
+
+    & > span {
+      color: $card-btn-desctop-color;
+    }
+  }
+
+  .bottom {
+    max-width: 420px;
+    padding: 29px 43px;
+  }
+
+  .title {
+    margin-bottom: 40px;
+    font-size: 32px;
+  }
+
+  .text {
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+
+  .pages {
+    justify-content: start;
+
+    & > span {
+      font-size: 14px;
+    }
+  }
+}
