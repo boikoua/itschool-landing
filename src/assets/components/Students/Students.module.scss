@@ -1,0 +1,26 @@
+@import './../../styles/variables.scss';
+
+.students {
+  margin-bottom: 80px;
+}
+
+.title {
+  margin-bottom: 28px;
+  color: $text-dark-color;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 29px;
+}
+
+@media (min-width: 670px) {
+  .title {
+    margin-bottom: 40px;
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .students {
+    margin-bottom: 200px;
+  }
+}
