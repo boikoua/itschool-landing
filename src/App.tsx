@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
 import Switch from './assets/components/Switch';
 
 const API_KEY = '71c9703614e3f98df03507b272cbfa49';
@@ -13,7 +14,24 @@ function App() {
 
   const [city, setCity] = useState('Kyiv');
 
+  const [inputValue, setInputValue] = useState('');
+
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  const debouncedCity = useCallback(
+    debounce((cityName: string) => {
+      setCity(cityName);
+    }, 1000),
+    []
+  );
+
+  const handleChangeInputValue = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setInputValue(value);
+    debouncedCity(value);
+  };
 
   useEffect(() => {
     if (theme === 'light') {
@@ -28,6 +46,10 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
+    if (!city) return;
+
+    setIsLoading(true);
+
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
     )
@@ -46,7 +68,7 @@ function App() {
 
   return (
     <>
-      <header className="container mx-auto px-2 sm:px-0 py-2 sm:py-3 flex items-center justify-between">
+      <header className="container mx-auto py-2 sm:py-3 flex items-center justify-between">
         <div className="logo flex items-center gap-2 sm:gap-3">
           <img className="logoImg w-10 sm:w-16" src="img/logo.svg" alt="logo" />
           <span className="text-white text-xl sm:text-2xl">
@@ -57,12 +79,18 @@ function App() {
         <Switch theme={theme} setTheme={setTheme} />
       </header>
 
-      <main className="container mx-auto">
+      <main className="container mx-auto py-10 flex flex-col justify-center items-center gap-30">
         <input
+          className="pt-2 pb-1 px-6 text-3xl sm:text-5xl mx-auto w-full sm:w-2xl sm:mx-auto border-b-2 border-slate-300 outline-0 text-white"
           type="text"
           placeholder="Your city name"
-          onChange={(event) => setCity(event.target.value)}
+          value={inputValue}
+          onChange={handleChangeInputValue}
         />
+
+        <article className="bg-gradient-to-r from-sky-400 to-blue-600 p-4 w-full sm:max-w-2xl rounded-2xl shadow-lg from-gray-800 text-white">
+          Lorem ipsum dolor sit .
+        </article>
       </main>
     </>
   );
