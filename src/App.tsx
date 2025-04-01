@@ -4,6 +4,7 @@ import cn from 'classnames';
 import Switch from './assets/components/Switch';
 import Loader from './assets/components/Loader';
 import Error from './assets/components/Error';
+import { Weather } from './assets/types/Weather';
 
 const API_KEY = '71c9703614e3f98df03507b272cbfa49';
 
@@ -14,7 +15,7 @@ const lightThemeCardClasses = ['from-sky-400', 'to-blue-600'];
 const darkThemeCardClasses = ['from-gray-900', 'to-blue-950'];
 
 function App() {
-  const [currentWeather, setCurrentWeather] = useState({});
+  const [currentWeather, setCurrentWeather] = useState<Weather | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -55,11 +56,19 @@ function App() {
     if (!city) return;
 
     setIsLoading(true);
+    setIsError(false);
 
     fetch(
-      `https://a+pi.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          setIsLoading(false);
+          setIsError(true);
+        }
+      })
       .then((data) => setCurrentWeather(data))
       .catch(() => {
         setIsLoading(false);
@@ -71,6 +80,14 @@ function App() {
   }, [city]);
 
   console.log(currentWeather);
+
+  const date = new Date();
+
+  const today = {
+    day: date.getDate(),
+    dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
+    monthName: date.toLocaleDateString('en-US', { month: 'long' }),
+  };
 
   return (
     <>
@@ -85,7 +102,7 @@ function App() {
         <Switch theme={theme} setTheme={setTheme} />
       </header>
 
-      <main className="container mx-auto py-10 flex flex-col justify-center items-center gap-30">
+      <main className="container mx-auto py-10 flex flex-col justify-center items-center gap-20">
         <input
           className="pt-2 pb-1 px-6 text-3xl sm:text-5xl mx-auto w-full sm:w-2xl sm:mx-auto border-b-2 border-slate-300 outline-0 text-white"
           type="text"
@@ -105,15 +122,22 @@ function App() {
 
           {!isLoading && isError && <Error />}
 
-          {!isLoading && !isError && (
+          {!isLoading && !isError && currentWeather && (
             <>
               <div>
-                <span className="text-7xl">27°</span>
+                <span className="text-7xl">
+                  {Math.round(currentWeather.main.temp)}°
+                </span>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-sm">Tuesday, 23 December</span>
-                <span className="text-sm">Kiev, Ukraine</span>
+                <span className="text-sm">
+                  {today.dayName}, {today.day} {today.monthName}
+                </span>
+                <span className="text-sm">
+                  {currentWeather.name}, {currentWeather.sys.country},{' '}
+                  {currentWeather.weather[0].description}
+                </span>
               </div>
             </>
           )}
