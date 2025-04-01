@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import cn from 'classnames';
 import Switch from './assets/components/Switch';
+import Loader from './assets/components/Loader';
+import Error from './assets/components/Error';
 
 const API_KEY = '71c9703614e3f98df03507b272cbfa49';
 
@@ -55,7 +57,7 @@ function App() {
     setIsLoading(true);
 
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
+      `https://a+pi.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
     )
       .then((response) => response.json())
       .then((data) => setCurrentWeather(data))
@@ -95,17 +97,26 @@ function App() {
         <article
           className={cn(
             'flex flex-col sm:flex-row gap-3 bg-gradient-to-r  p-4 w-full sm:max-w-2xl rounded-2xl shadow-lg text-white transition duration-500 easy-in delay-100',
-            theme === 'light' ? lightThemeCardClasses : darkThemeCardClasses
+            theme === 'light' ? lightThemeCardClasses : darkThemeCardClasses,
+            isLoading || isError ? 'justify-center' : ''
           )}
         >
-          <div>
-            <span className="text-7xl">27°</span>
-          </div>
+          {isLoading && !isError && <Loader />}
 
-          <div className="flex flex-col">
-            <span className="text-sm">Tuesday, 23 December</span>
-            <span className="text-sm">Kiev, Ukraine</span>
-          </div>
+          {!isLoading && isError && <Error />}
+
+          {!isLoading && !isError && (
+            <>
+              <div>
+                <span className="text-7xl">27°</span>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-sm">Tuesday, 23 December</span>
+                <span className="text-sm">Kiev, Ukraine</span>
+              </div>
+            </>
+          )}
         </article>
       </main>
     </>
