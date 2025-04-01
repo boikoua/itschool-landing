@@ -1,4 +1,5 @@
 interface WeatherDescription {
+  id: number;
   description: string;
   main: string;
 }

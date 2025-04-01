@@ -20,7 +20,9 @@ function App() {
   const [isError, setIsError] = useState(false);
 
   const [city, setCity] = useState('Kyiv');
-
+  const [language, setLanguage] = useState(
+    localStorage.getItem('lang') || 'en'
+  );
   const [inputValue, setInputValue] = useState('');
 
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -59,7 +61,7 @@ function App() {
     setIsError(false);
 
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=${language}`
     )
       .then((response) => {
         if (response.ok) {
@@ -77,16 +79,39 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [city]);
+  }, [city, language]);
 
   console.log(currentWeather);
 
   const date = new Date();
 
-  const today = {
+  const todayEN = {
     day: date.getDate(),
     dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
     monthName: date.toLocaleDateString('en-US', { month: 'long' }),
+  };
+
+  const todayUA = {
+    day: date.getDate(),
+    dayName: date.toLocaleDateString('uk-UA', { weekday: 'long' }),
+    monthName: date.toLocaleDateString('uk-UA', { month: 'long' }),
+  };
+
+  const { day, dayName, monthName } = language === 'en' ? todayEN : todayUA;
+
+  function weatherDescription(num: number) {
+    if (num >= 200 && num < 300) return 'thunderstorm';
+    if (num >= 300 && num < 500) return 'drizzle';
+    if (num >= 500 && num < 600) return 'rain';
+    if (num >= 600 && num < 700) return 'snow';
+    if (num >= 700 && num < 800) return 'atmosphere';
+    if (num === 800) return 'clear';
+    if (num > 800) return 'clouds';
+  }
+
+  const handleChangeLang = (val: string) => {
+    setLanguage(val);
+    localStorage.setItem('lang', val);
   };
 
   return (
@@ -102,18 +127,20 @@ function App() {
         <Switch theme={theme} setTheme={setTheme} />
       </header>
 
-      <main className="container mx-auto py-10 flex flex-col justify-center items-center gap-20">
+      <main className="container mx-auto mb-10 py-10 flex flex-col justify-center items-center gap-20">
         <input
           className="pt-2 pb-1 px-6 text-3xl sm:text-5xl mx-auto w-full sm:w-2xl sm:mx-auto border-b-2 border-slate-300 outline-0 text-white"
           type="text"
-          placeholder="Your city name"
+          placeholder={
+            language === 'en' ? 'Enter the city name' : 'Введіть назву міста'
+          }
           value={inputValue}
           onChange={handleChangeInputValue}
         />
 
         <article
           className={cn(
-            'flex flex-col sm:flex-row gap-3 bg-gradient-to-r  p-4 w-full sm:max-w-2xl rounded-2xl shadow-lg text-white transition duration-500 easy-in delay-100',
+            'flex flex-col sm:flex-row gap-3 bg-gradient-to-r p-4 w-full sm:max-w-lg rounded-2xl shadow-lg text-white transition duration-500 easy-in delay-100 relative',
             theme === 'light' ? lightThemeCardClasses : darkThemeCardClasses,
             isLoading || isError ? 'justify-center' : ''
           )}
@@ -130,19 +157,67 @@ function App() {
                 </span>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col justify-end">
                 <span className="text-sm">
-                  {today.dayName}, {today.day} {today.monthName}
+                  {dayName[0].toUpperCase() + dayName.slice(1)}, {day}{' '}
+                  {monthName[0].toUpperCase() + monthName.slice(1)}
                 </span>
                 <span className="text-sm">
                   {currentWeather.name}, {currentWeather.sys.country},{' '}
                   {currentWeather.weather[0].description}
                 </span>
               </div>
+
+              <img
+                className="w-18 absolute right-4"
+                src={`img/${weatherDescription(
+                  currentWeather.weather[0].id
+                )}.png`}
+                alt="sun"
+              />
             </>
           )}
         </article>
+
+        <div className="flex gap-4">
+          <span onClick={() => handleChangeLang('ua')}>
+            <img
+              className="w-16 rounded-full shadow-lg hover:shadow-md hover:shadow-gray-300 transition-shadow duration-300 ease-in-out cursor-pointer"
+              src="img/ua.png"
+              alt="uk"
+            />
+          </span>
+          <span onClick={() => handleChangeLang('en')}>
+            <img
+              className="w-16 rounded-full shadow-lg hover:shadow-md hover:shadow-gray-300 transition-shadow duration-300 ease-in-out cursor-pointer"
+              src="img/en.png"
+              alt="en"
+            />
+          </span>
+        </div>
       </main>
+
+      <footer className="flex justify-center">
+        <a
+          className={cn(
+            'flex items-center gap-3 p-2 rounded-lg bg-gradient-to-r text-white  hover:shadow-lg transition duration-300 ease-in-out',
+            theme === 'light'
+              ? 'from-sky-400 to-blue-600'
+              : 'bg-gray-900 to-blue-950'
+          )}
+          href="https://github.com/boikoua"
+          target="_blank"
+        >
+          <img
+            className="w-8 h-8 rounded-full"
+            src="img/github.png"
+            alt="github"
+          />
+          <span className="text-lg font-medium">
+            {language === 'en' ? 'Dmitry Boiko' : 'Дмитро Бойко'}
+          </span>
+        </a>
+      </footer>
     </>
   );
 }
